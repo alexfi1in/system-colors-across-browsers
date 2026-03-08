@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "browser": "Safari 26.3.1",
+    "os": "macOS 10.15.7",
+    "date": "2026-03-08"
+  },
+  "colors": {
+    "AccentColor": "#007aff",
+    "AccentColorText": "#000000",
+    "ActiveText": "#ff9e9e",
+    "ButtonBorder": "#ffffff",
+    "ButtonFace": "#ffffff",
+    "ButtonText": "#ffffff",
+    "Canvas": "#1e1e1e",
+    "CanvasText": "#ffffff",
+    "Field": "#ffffff",
+    "FieldText": "#ffffff",
+    "GrayText": "#ffffff",
+    "Highlight": "#3f638b",
+    "HighlightText": "#ffffff",
+    "LinkText": "#9e9eff",
+    "Mark": "#ffff00",
+    "MarkText": "#000000",
+    "SelectedItem": "#c0c0c0",
+    "SelectedItemText": "#000000",
+    "VisitedText": "#d0adf0"
+  },
+  "rawColors": {
+    "ButtonFace": "rgba(255, 255, 255, 0.247)",
+    "ButtonText": "rgba(255, 255, 255, 0.847)",
+    "Field": "rgba(255, 255, 255, 0.247)",
+    "FieldText": "rgba(255, 255, 255, 0.847)",
+    "GrayText": "rgba(255, 255, 255, 0.247)",
+    "Highlight": "rgba(63, 99, 139, 0.8)"
+  }
+}

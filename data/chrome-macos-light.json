@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "browser": "Chrome 145.0.0.0",
+    "os": "macOS 10.15.7",
+    "date": "2026-03-08"
+  },
+  "colors": {
+    "AccentColor": "#000000",
+    "AccentColorText": "#000000",
+    "ActiveText": "#ff0000",
+    "ButtonBorder": "#000000",
+    "ButtonFace": "#efefef",
+    "ButtonText": "#000000",
+    "Canvas": "#ffffff",
+    "CanvasText": "#000000",
+    "Field": "#ffffff",
+    "FieldText": "#000000",
+    "GrayText": "#808080",
+    "Highlight": "#80bcfe",
+    "HighlightText": "#000000",
+    "LinkText": "#0000ee",
+    "Mark": "#ffff00",
+    "MarkText": "#000000",
+    "SelectedItem": "#b3d7ff",
+    "SelectedItemText": "#000000",
+    "VisitedText": "#551a8b"
+  },
+  "rawColors": {
+    "Highlight": "rgba(128, 188, 254, 0.6)"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "browser": "Firefox 148.0",
+    "os": "Windows NT 10.0",
+    "date": "2026-03-08"
+  },
+  "colors": {
+    "AccentColor": "#0060df",
+    "AccentColorText": "#ffffff",
+    "ActiveText": "#ee0000",
+    "ButtonBorder": "#8f8f9d",
+    "ButtonFace": "#e9e9ed",
+    "ButtonText": "#000000",
+    "Canvas": "#ffffff",
+    "CanvasText": "#000000",
+    "Field": "#ffffff",
+    "FieldText": "#000000",
+    "GrayText": "#6d6d6d",
+    "Highlight": "#0078d4",
+    "HighlightText": "#ffffff",
+    "LinkText": "#0000ee",
+    "Mark": "#ffff00",
+    "MarkText": "#000000",
+    "SelectedItem": "#0078d4",
+    "SelectedItemText": "#ffffff",
+    "VisitedText": "#551a8b"
+  }
+}

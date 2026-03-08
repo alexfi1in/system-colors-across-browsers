@@ -1,0 +1,146 @@
+/* Typography for Markdown-generated content in #notes.
+   Rhythm: all spacing via gap in grid — no margin on individual elements.
+   Cell padding: uniform 4px 8px everywhere, matching the matrix. */
+
+#notes {
+  display: grid;
+  gap: 32px;
+  font-size: 1.25rem;
+  line-height: 1.7;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Each h3 insight is wrapped in <section> by the build step */
+#notes section {
+  display: grid;
+  gap: 8px;
+}
+
+#notes h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+#notes h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-top: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid ButtonBorder;
+}
+
+#notes h2:first-child {
+  border-bottom: 1px solid ButtonBorder;
+}
+
+#notes h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* h2 already acts as a section divider — hr between sections is redundant */
+#notes hr {
+  display: none;
+}
+
+#notes code {
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  vertical-align: baseline;
+  border: 1px solid GrayText;
+  border-radius: 3px;
+  padding: 0 3px;
+}
+
+#notes a {
+  color: LinkText;
+}
+
+#notes a:hover {
+  text-decoration: underline;
+}
+
+#notes ul,
+#notes ol {
+  padding-left: 20px;
+  display: grid;
+  gap: 2px;
+}
+
+#notes blockquote {
+  border-left: 2px solid ButtonBorder;
+  padding-left: 12px;
+  color: GrayText;
+}
+
+#notes pre {
+  background: ButtonFace;
+  border: 1px solid ButtonBorder;
+  padding: 8px 12px;
+  overflow-x: auto;
+}
+
+#notes pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Tables */
+
+#notes table {
+  border-collapse: collapse;
+  width: auto;
+}
+
+#notes th,
+#notes td {
+  padding: 4px 8px;
+  text-align: left;
+  font-weight: normal;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  border: 1px solid ButtonBorder;
+}
+
+#notes thead th {
+  color: GrayText;
+}
+
+/* Swatch injected inside <code> for hex values */
+#notes code:has(.swatch) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#notes code .swatch {
+  flex-shrink: 0;
+}
+
+/* compare-table inside notes: strip its own padding rules to match notes table */
+#notes .compare-table th,
+#notes .compare-table td {
+  padding: 4px 8px;
+}
+
+#notes .compare-table th:first-child,
+#notes .compare-table td:first-child {
+  padding-left: 0;
+}
+
+#notes td code,
+#notes th code,
+#notes .compare-table code {
+  font-family: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* data-ref inside notes: code has no background (swatch provides context) */
+#notes [data-ref] code {
+  background: none;
+  padding: 0;
+}

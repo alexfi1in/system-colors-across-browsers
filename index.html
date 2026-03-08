@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>System Colors Across Browsers</title>
+    <meta
+      name="description"
+      content="CSS system color keyword values across browsers and operating systems"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="notes.css" />
+  </head>
+  <body>
+    <header>
+      <h1>System Colors Across Browsers</h1>
+      <div class="controls">
+        <label for="mode-toggle">System theme</label>
+        <select id="mode-toggle">
+          <option value="light">light</option>
+          <option value="dark">dark</option>
+        </select>
+      </div>
+      <a
+        class="github-link"
+        href="https://github.com/alexfi1in/system-colors-across-browsers"
+        aria-label="GitHub repository"
+      >
+        <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+      </a>
+    </header>
+    <main>
+      <div class="matrix" id="matrix"></div>
+    </main>
+    <article id="notes">
+    <!-- NOTES:START -->
+<h2>About</h2>
+<p>I built this page because I was curious: how do CSS system colors actually resolve across browsers and operating systems — and can you build anything serious on top of them? This is what I found. Data is collected from current (evergreen) browser versions and updated periodically. — Alexey Filin · <a href="https://github.com/alexfi1in/system-colors-across-browsers">GitHub</a> · <a href="https://t.me/alexeyfilin">Telegram</a></p>
+<h2>Notes</h2>
+</section>
+<section>
+<h3>Mark and MarkText — the only universal pair</h3>
+<p><code>Mark</code> = <code>#ffff00</code>, <code>MarkText</code> = <code>#000000</code> across all 10 configurations without exception. If you need one guaranteed system color pair, this is it.</p>
+</section>
+<section>
+<h3>Chrome fakes AccentColor — but leaks the real one through Highlight</h3>
+<p>Chrome returns <code>#000000</code> in light mode and <code>#ffffff</code> in dark — on both macOS and Windows. These aren&#39;t user accent colors, they&#39;re hard-coded fallbacks. Firefox returns <code>#007aff</code> (macOS blue) and <code>#0060df</code> (its own blue on Windows). Safari returns <code>#007aff</code> in both themes.</p>
+<p>But Chrome does know the real accent: on Windows, <code>Highlight</code> returns exactly <code>#0078d4</code> — the system accent color. On macOS, Chrome and Safari both return <code>rgba(128, 188, 254, 0.6)</code> — a semi-transparent derivative of <code>#007aff</code>. Chrome reads the OS accent for text selection but doesn&#39;t expose it through <code>AccentColor</code>.</p>
+</section>
+<section>
+<h3>Safari uses transparency throughout</h3>
+<p>Safari exposes AppKit semantic colors with alpha. In light mode: <code>GrayText</code> is <code>rgba(0,0,0, 0.247)</code>, <code>ButtonText</code> and <code>FieldText</code> are <code>rgba(0,0,0, 0.847)</code>. In dark mode: <code>ButtonFace</code> and <code>Field</code> become <code>rgba(255,255,255, 0.247)</code>, <code>ButtonText</code> and <code>FieldText</code> become <code>rgba(255,255,255, 0.847)</code>. The hex values in this dataset are alpha-flattened — in dark mode, six keywords collapse to <code>#ffffff</code> in the table, but the actual rendered colors composite against the background and remain distinguishable.</p>
+</section>
+<section>
+<h3>Highlight is the most unpredictable keyword</h3>
+<p>7 distinct values across 10 configurations, 6 of them semi-transparent under the hood, and contrast polarity flips between platforms: Chrome macOS dark puts dark text on a light selection (<code>#b3d7ff</code> + <code>#000000</code>), while Chrome Windows dark does the reverse (<code>#1967d2</code> + <code>#ffffff</code>). <code>SelectedItem</code> has even more unique values (8), but only <code>Highlight</code> combines high variance with transparency and polarity inversion.</p>
+</section>
+<section>
+<h3>In dark mode, the OS disappears</h3>
+<p>Chrome dark returns identical values on macOS and Windows for 17 out of 19 keywords — only <code>Highlight</code> and <code>HighlightText</code> differ. Firefox matches on 15 out of 19, with <code>AccentColor</code>, <code>Highlight</code>, <code>SelectedItem</code>, and <code>SelectedItemText</code> still OS-dependent. Both browsers ship their own dark palette; the OS only leaks through accent and selection colors. In light mode, the picture is different — Chrome diverges on nearly half the keywords between macOS and Windows.</p>
+</section>
+<section>
+<h3>Chrome Windows light: all link states collapse</h3>
+<p><code>LinkText</code>, <code>VisitedText</code>, and <code>ActiveText</code> all resolve to <code>#0066cc</code>. No visual distinction between link states. Every other configuration preserves at least some difference.</p>
+</section>
+<section>
+<h3>ButtonBorder — only Firefox provides a usable one</h3>
+<p>Firefox returns <code>#8f8f9d</code> in all four configs — a consistent mid-gray that works as a visible border. Chrome uses <code>#000000</code> / <code>#ffffff</code> (matching its broken <code>AccentColor</code>). Safari uses <code>#ffffff</code>. If your design relies on <code>ButtonBorder</code>, only Firefox delivers.</p>
+
+</section>
+    <!-- NOTES:END -->
+    </article>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

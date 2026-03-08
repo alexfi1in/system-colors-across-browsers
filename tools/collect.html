@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>System Color Collector</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        color-scheme: light dark;
+      }
+      body {
+        background: Canvas;
+        color: CanvasText;
+        font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo,
+          Consolas, "DejaVu Sans Mono", monospace;
+        font-size: 13px;
+        line-height: 1.4;
+        padding: 24px;
+        max-width: 640px;
+      }
+      header {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid ButtonBorder;
+        padding-bottom: 12px;
+      }
+      h1 {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .detected {
+        color: GrayText;
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 20px;
+        padding: 8px 12px;
+        background: Field;
+        color: FieldText;
+        border: 1px solid ButtonBorder;
+        border-radius: 4px;
+      }
+      .info-row {
+        display: flex;
+        gap: 8px;
+      }
+      .info-label {
+        color: GrayText;
+        min-width: 70px;
+      }
+      .info-value {
+        font-weight: 600;
+      }
+      .colors-grid {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 0;
+        margin-bottom: 20px;
+      }
+      .group-label {
+        grid-column: 1 / -1;
+        padding: 10px 0 4px;
+        font-weight: 600;
+        color: GrayText;
+        border-bottom: 1px solid ButtonBorder;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .group-label:first-child {
+        padding-top: 0;
+      }
+      .color-name {
+        padding: 4px 12px 4px 0;
+        white-space: nowrap;
+      }
+      .color-swatch {
+        display: flex;
+        align-items: center;
+        padding: 4px 8px;
+      }
+      .color-swatch span {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        border: 1px solid ButtonBorder;
+        border-radius: 2px;
+      }
+      .color-hex {
+        padding: 4px 0 4px 8px;
+        white-space: nowrap;
+      }
+      .color-raw {
+        display: block;
+        font-size: 11px;
+        color: GrayText;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      button {
+        font-family: inherit;
+        font-size: inherit;
+        padding: 6px 16px;
+        background: ButtonFace;
+        color: ButtonText;
+        border: 1px solid ButtonBorder;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.85;
+      }
+      .toast {
+        display: inline-block;
+        margin-left: 12px;
+        color: GrayText;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .toast.visible {
+        opacity: 1;
+      }
+      pre {
+        background: Field;
+        color: FieldText;
+        border: 1px solid ButtonBorder;
+        border-radius: 4px;
+        padding: 12px;
+        overflow-x: auto;
+        font-size: 12px;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>System Color Collector</h1>
+      <span class="detected" id="detected-key"></span>
+    </header>
+
+    <div class="info" id="info"></div>
+    <div class="colors-grid" id="colors-grid"></div>
+
+    <div class="actions">
+      <button id="btn-copy">Copy JSON</button>
+      <span class="toast" id="toast">Copied!</span>
+    </div>
+
+    <pre id="json-output"></pre>
+
+    <script>
+      const SYSTEM_COLORS = [
+        "AccentColor",
+        "AccentColorText",
+        "ActiveText",
+        "ButtonBorder",
+        "ButtonFace",
+        "ButtonText",
+        "Canvas",
+        "CanvasText",
+        "Field",
+        "FieldText",
+        "GrayText",
+        "Highlight",
+        "HighlightText",
+        "LinkText",
+        "Mark",
+        "MarkText",
+        "SelectedItem",
+        "SelectedItemText",
+        "VisitedText",
+      ];
+
+      const GROUPS = [
+        { label: "Page", keys: ["Canvas", "CanvasText"] },
+        {
+          label: "Controls",
+          keys: ["ButtonFace", "ButtonText", "ButtonBorder"],
+        },
+        { label: "Fields", keys: ["Field", "FieldText"] },
+        {
+          label: "Selection",
+          keys: [
+            "Highlight",
+            "HighlightText",
+            "SelectedItem",
+            "SelectedItemText",
+          ],
+        },
+        { label: "Links", keys: ["LinkText", "VisitedText", "ActiveText"] },
+        { label: "Accent", keys: ["AccentColor", "AccentColorText"] },
+        { label: "Marks", keys: ["Mark", "MarkText"] },
+        { label: "Disabled", keys: ["GrayText"] },
+      ];
+
+      function detectBrowser() {
+        const ua = navigator.userAgent;
+        if (ua.includes("Firefox")) return "firefox";
+        if (ua.includes("Edg/")) return "edge";
+        if (
+          ua.includes("Safari") &&
+          !ua.includes("Chrome") &&
+          !ua.includes("Chromium")
+        )
+          return "safari";
+        if (ua.includes("Chrome") || ua.includes("Chromium")) return "chrome";
+        return "unknown";
+      }
+
+      function detectBrowserVersion() {
+        const ua = navigator.userAgent;
+        const browser = detectBrowser();
+        let m;
+        switch (browser) {
+          case "firefox":
+            m = ua.match(/Firefox\/([\d.]+)/);
+            return m ? `Firefox ${m[1]}` : "Firefox";
+          case "safari":
+            m = ua.match(/Version\/([\d.]+)/);
+            return m ? `Safari ${m[1]}` : "Safari";
+          case "chrome":
+            m = ua.match(/Chrome\/([\d.]+)/);
+            return m ? `Chrome ${m[1]}` : "Chrome";
+          case "edge":
+            m = ua.match(/Edg\/([\d.]+)/);
+            return m ? `Edge ${m[1]}` : "Edge";
+          default:
+            return "Unknown";
+        }
+      }
+
+      function detectOS() {
+        const p = navigator.platform || "";
+        const ua = navigator.userAgent;
+        if (p.startsWith("Mac") || ua.includes("Macintosh")) return "macos";
+        if (p.startsWith("Win") || ua.includes("Windows")) return "windows";
+        if (p.startsWith("Linux") || ua.includes("Linux")) return "linux";
+        return "unknown";
+      }
+
+      function detectOSVersion() {
+        const ua = navigator.userAgent;
+        let m;
+        m = ua.match(/Mac OS X ([\d_.]+)/);
+        if (m) return "macOS " + m[1].replace(/_/g, ".");
+        m = ua.match(/Windows NT ([\d.]+)/);
+        if (m) return "Windows NT " + m[1];
+        return detectOS();
+      }
+
+      function detectScheme() {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+
+      function parseColor(rgb) {
+        const m = rgb.match(
+          /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)/,
+        );
+        if (!m) return null;
+        const hex =
+          "#" +
+          [m[1], m[2], m[3]]
+            .map((c) => Number(c).toString(16).padStart(2, "0"))
+            .join("");
+        const alpha = m[4] !== undefined ? parseFloat(m[4]) : 1;
+        return { hex, alpha, raw: rgb };
+      }
+
+      function collectColors() {
+        const el = document.createElement("div");
+        document.body.appendChild(el);
+        const colors = {};
+        const rawColors = {};
+        for (const name of SYSTEM_COLORS) {
+          el.style.color = name;
+          const raw = getComputedStyle(el).color;
+          const parsed = parseColor(raw);
+          colors[name] = parsed?.hex ?? "--";
+          if (parsed && parsed.alpha < 1) {
+            rawColors[name] = parsed.raw;
+          }
+        }
+        el.remove();
+        return { colors, rawColors };
+      }
+
+      function render() {
+        const browser = detectBrowser();
+        const os = detectOS();
+        const scheme = detectScheme();
+        const key = `${browser}-${os}-${scheme}`;
+        const { colors, rawColors } = collectColors();
+        const filename = `${key}.json`;
+        const browserVersion = detectBrowserVersion();
+        const today = new Date().toISOString().slice(0, 10);
+
+        document.getElementById("detected-key").textContent = filename;
+
+        const osVersion = detectOSVersion();
+
+        const info = document.getElementById("info");
+        info.innerHTML = [
+          ["Browser", browserVersion],
+          ["OS", osVersion],
+          ["Scheme", scheme],
+          ["Filename", filename],
+        ]
+          .map(
+            ([l, v]) =>
+              `<div class="info-row"><span class="info-label">${l}</span><span class="info-value">${v}</span></div>`,
+          )
+          .join("");
+
+        const grid = document.getElementById("colors-grid");
+        grid.innerHTML = "";
+        for (const group of GROUPS) {
+          const lbl = document.createElement("div");
+          lbl.className = "group-label";
+          lbl.textContent = group.label;
+          grid.appendChild(lbl);
+
+          for (const name of group.keys) {
+            const hex = colors[name];
+
+            const nameEl = document.createElement("div");
+            nameEl.className = "color-name";
+            nameEl.textContent = name;
+            grid.appendChild(nameEl);
+
+            const swatchEl = document.createElement("div");
+            swatchEl.className = "color-swatch";
+            const swatchBox = document.createElement("span");
+            swatchBox.style.backgroundColor = hex;
+            swatchEl.appendChild(swatchBox);
+            grid.appendChild(swatchEl);
+
+            const hexEl = document.createElement("div");
+            hexEl.className = "color-hex";
+            if (rawColors[name]) {
+              hexEl.textContent = hex;
+              const raw = document.createElement("span");
+              raw.className = "color-raw";
+              raw.textContent = rawColors[name];
+              hexEl.appendChild(raw);
+            } else {
+              hexEl.textContent = hex;
+            }
+            grid.appendChild(hexEl);
+          }
+        }
+
+        const output = {
+          meta: {
+            browser: browserVersion,
+            os: osVersion,
+            date: today,
+          },
+          colors,
+          ...(Object.keys(rawColors).length > 0 && { rawColors }),
+        };
+        const jsonStr = JSON.stringify(output, null, 2) + "\n";
+        document.getElementById("json-output").textContent = jsonStr;
+
+        document.getElementById("btn-copy").onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(jsonStr);
+            const toast = document.getElementById("toast");
+            toast.classList.add("visible");
+            setTimeout(() => toast.classList.remove("visible"), 1500);
+          } catch {
+            prompt("Copy this JSON:", jsonStr);
+          }
+        };
+      }
+
+      render();
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", render);
+    </script>
+  </body>
+</html>

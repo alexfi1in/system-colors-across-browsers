@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "browser": "Firefox 148.0",
+    "os": "macOS 10.15",
+    "date": "2026-03-08"
+  },
+  "colors": {
+    "AccentColor": "#007aff",
+    "AccentColorText": "#ffffff",
+    "ActiveText": "#ff6666",
+    "ButtonBorder": "#8f8f9d",
+    "ButtonFace": "#2b2a33",
+    "ButtonText": "#fbfbfe",
+    "Canvas": "#1c1b22",
+    "CanvasText": "#fbfbfe",
+    "Field": "#2b2a33",
+    "FieldText": "#fbfbfe",
+    "GrayText": "#75747a",
+    "Highlight": "#3f638b",
+    "HighlightText": "#fbfbfe",
+    "LinkText": "#00cadb",
+    "Mark": "#ffff00",
+    "MarkText": "#000000",
+    "SelectedItem": "#0059d1",
+    "SelectedItemText": "#ffffff",
+    "VisitedText": "#ffadff"
+  }
+}

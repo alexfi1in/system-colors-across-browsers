@@ -1,0 +1,222 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  background: Canvas;
+  color: CanvasText;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
+    "DejaVu Sans Mono", monospace;
+  font-size: 1rem;
+  line-height: 1.4;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+:focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+/* ---- Header ---- */
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid ButtonBorder;
+  padding-bottom: 16px;
+}
+
+.github-link {
+  margin-left: auto;
+  color: GrayText;
+  line-height: 1;
+}
+
+.github-link:hover {
+  color: CanvasText;
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.controls label {
+  color: GrayText;
+}
+
+.controls select {
+  font-family: inherit;
+  font-size: inherit;
+  background: Field;
+  color: FieldText;
+  border: 1px solid ButtonBorder;
+  padding: 2px 4px;
+}
+
+main {
+  overflow-x: auto;
+}
+
+/* ---- Matrix table ---- */
+
+.matrix {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.matrix-os-header {
+  font-weight: 600;
+  text-align: center;
+  padding: 4px 8px;
+  border-bottom: 1px solid ButtonBorder;
+}
+
+.matrix-browser-header {
+  text-align: left;
+  padding: 4px 8px;
+  color: GrayText;
+  border-bottom: 1px solid ButtonBorder;
+  font-weight: normal;
+}
+
+.matrix-group-label {
+  padding: 12px 0 4px;
+  font-weight: 600;
+  color: GrayText;
+  border-bottom: 1px solid ButtonBorder;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+tbody:first-of-type .matrix-group-label {
+  padding-top: 4px;
+}
+
+.matrix-row-label {
+  padding: 4px 12px 4px 0;
+  white-space: nowrap;
+  font-weight: normal;
+  text-align: left;
+}
+
+.matrix-cell {
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.swatch-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swatch {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 1px solid ButtonBorder;
+  border-radius: 2px;
+}
+
+.matrix-cell.unsupported {
+  color: GrayText;
+}
+
+/* ---- Notes ---- */
+
+#notes {
+  margin-top: 80px;
+  padding-top: 32px;
+  /* layout, rhythm, and typography live in notes.css */
+}
+
+#notes:empty {
+  display: none;
+}
+
+/* ---- Shared: color references & compare tables ---- */
+
+[data-ref] {
+  white-space: nowrap;
+}
+
+[data-ref] code {
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  vertical-align: middle;
+}
+
+#notes [data-ref] code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.color-na {
+  color: GrayText;
+}
+
+.compare-table {
+  border-collapse: collapse;
+  margin: 10px 0 4px;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 3px 12px 3px 0;
+  text-align: left;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.compare-table thead th {
+  color: GrayText;
+  font-size: 1rem;
+  padding-bottom: 4px;
+  border-bottom: 1px solid ButtonBorder;
+}
+
+.compare-table tbody th {
+  color: GrayText;
+}
+
+.compare-table code {
+  font-family: inherit;
+}
+
+#notes .compare-table code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Row hover */
+
+.matrix-row:hover td,
+.matrix-row:hover th {
+  background: color-mix(in srgb, Highlight 5%, transparent);
+}

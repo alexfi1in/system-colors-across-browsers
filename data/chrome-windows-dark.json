@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "browser": "Chrome 145.0.0.0",
+    "os": "Windows NT 10.0",
+    "date": "2026-03-08"
+  },
+  "colors": {
+    "AccentColor": "#ffffff",
+    "AccentColorText": "#ffffff",
+    "ActiveText": "#ff0000",
+    "ButtonBorder": "#ffffff",
+    "ButtonFace": "#6b6b6b",
+    "ButtonText": "#ffffff",
+    "Canvas": "#121212",
+    "CanvasText": "#ffffff",
+    "Field": "#3b3b3b",
+    "FieldText": "#ffffff",
+    "GrayText": "#808080",
+    "Highlight": "#1967d2",
+    "HighlightText": "#ffffff",
+    "LinkText": "#9e9eff",
+    "Mark": "#ffff00",
+    "MarkText": "#000000",
+    "SelectedItem": "#99c8ff",
+    "SelectedItemText": "#3b3b3b",
+    "VisitedText": "#d0adf0"
+  }
+}

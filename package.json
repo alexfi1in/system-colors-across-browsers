@@ -1,0 +1,11 @@
+{
+  "name": "system-colors-across-browsers",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "marked": "^17.0.4"
+  }
+}
