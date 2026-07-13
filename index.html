@@ -46,7 +46,7 @@
 </section>
 <section>
 <h3>Chrome fakes AccentColor — but leaks the real one through Highlight</h3>
-<p>Chrome returns <code>#000000</code> in light mode and <code>#ffffff</code> in dark — on both macOS and Windows. These aren&#39;t user accent colors, they&#39;re hard-coded fallbacks. Firefox returns <code>#007aff</code> (macOS blue) and <code>#0060df</code> (its own blue on Windows). Safari returns <code>#007aff</code> in both themes.</p>
+<p>For privacy and fingerprinting protection, Chrome does not expose the user&#39;s real <code>AccentColor</code> to regular websites, instead returning a hard-coded fallback (<code>#0075ff</code> on both macOS and Windows). Firefox returns <code>#007aff</code> (macOS blue) and <code>#0060df</code> (its own blue on Windows). Safari returns <code>#007aff</code> in both themes.</p>
 <p>But Chrome does know the real accent: on Windows, <code>Highlight</code> returns exactly <code>#0078d4</code> — the system accent color. On macOS, Chrome and Safari both return <code>rgba(128, 188, 254, 0.6)</code> — a semi-transparent derivative of <code>#007aff</code>. Chrome reads the OS accent for text selection but doesn&#39;t expose it through <code>AccentColor</code>.</p>
 </section>
 <section>
@@ -67,7 +67,7 @@
 </section>
 <section>
 <h3>ButtonBorder — only Firefox provides a usable one</h3>
-<p>Firefox returns <code>#8f8f9d</code> in all four configs — a consistent mid-gray that works as a visible border. Chrome uses <code>#000000</code> / <code>#ffffff</code> (matching its broken <code>AccentColor</code>). Safari uses <code>#ffffff</code>. If your design relies on <code>ButtonBorder</code>, only Firefox delivers.</p>
+<p>Firefox returns <code>#8f8f9d</code> in all four configs — a consistent mid-gray that works as a visible border. Chrome uses <code>#000000</code> / <code>#ffffff</code> (in light/dark modes respectively). Safari uses <code>#ffffff</code>. If your design relies on <code>ButtonBorder</code>, only Firefox delivers.</p>
 
 </section>
     <!-- NOTES:END -->

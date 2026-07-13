@@ -8,7 +8,7 @@ I built this page because I was curious: how do CSS system colors actually resol
 `Mark` = `#ffff00`, `MarkText` = `#000000` across all 10 configurations without exception. If you need one guaranteed system color pair, this is it.
 
 ### Chrome fakes AccentColor — but leaks the real one through Highlight
-Chrome returns `#000000` in light mode and `#ffffff` in dark — on both macOS and Windows. These aren't user accent colors, they're hard-coded fallbacks. Firefox returns `#007aff` (macOS blue) and `#0060df` (its own blue on Windows). Safari returns `#007aff` in both themes.
+For privacy and fingerprinting protection, Chrome does not expose the user's real `AccentColor` to regular websites, instead returning a hard-coded fallback (`#0075ff` on both macOS and Windows). Firefox returns `#007aff` (macOS blue) and `#0060df` (its own blue on Windows). Safari returns `#007aff` in both themes.
 
 But Chrome does know the real accent: on Windows, `Highlight` returns exactly `#0078d4` — the system accent color. On macOS, Chrome and Safari both return `rgba(128, 188, 254, 0.6)` — a semi-transparent derivative of `#007aff`. Chrome reads the OS accent for text selection but doesn't expose it through `AccentColor`.
 
@@ -25,4 +25,4 @@ Chrome dark returns identical values on macOS and Windows for 17 out of 19 keywo
 `LinkText`, `VisitedText`, and `ActiveText` all resolve to `#0066cc`. No visual distinction between link states. Every other configuration preserves at least some difference.
 
 ### ButtonBorder — only Firefox provides a usable one
-Firefox returns `#8f8f9d` in all four configs — a consistent mid-gray that works as a visible border. Chrome uses `#000000` / `#ffffff` (matching its broken `AccentColor`). Safari uses `#ffffff`. If your design relies on `ButtonBorder`, only Firefox delivers.
+Firefox returns `#8f8f9d` in all four configs — a consistent mid-gray that works as a visible border. Chrome uses `#000000` / `#ffffff` (in light/dark modes respectively). Safari uses `#ffffff`. If your design relies on `ButtonBorder`, only Firefox delivers.
