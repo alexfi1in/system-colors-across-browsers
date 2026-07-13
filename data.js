@@ -43,7 +43,7 @@ const DATA = {
     "VisitedText": "#551a8b"
   },
   "chrome-windows-dark": {
-    "AccentColor": "#ffffff",
+    "AccentColor": "#0075ff",
     "AccentColorText": "#ffffff",
     "ActiveText": "#ff0000",
     "ButtonBorder": "#ffffff",
@@ -64,8 +64,8 @@ const DATA = {
     "VisitedText": "#d0adf0"
   },
   "chrome-windows-light": {
-    "AccentColor": "#000000",
-    "AccentColorText": "#000000",
+    "AccentColor": "#0075ff",
+    "AccentColorText": "#ffffff",
     "ActiveText": "#0066cc",
     "ButtonBorder": "#000000",
     "ButtonFace": "#f0f0f0",
@@ -75,7 +75,7 @@ const DATA = {
     "Field": "#ffffff",
     "FieldText": "#000000",
     "GrayText": "#6d6d6d",
-    "Highlight": "#0078d4",
+    "Highlight": "#0078d7",
     "HighlightText": "#ffffff",
     "LinkText": "#0066cc",
     "Mark": "#ffff00",
@@ -159,12 +159,12 @@ const DATA = {
     "Field": "#ffffff",
     "FieldText": "#000000",
     "GrayText": "#6d6d6d",
-    "Highlight": "#0078d4",
+    "Highlight": "#0078d7",
     "HighlightText": "#ffffff",
     "LinkText": "#0000ee",
     "Mark": "#ffff00",
     "MarkText": "#000000",
-    "SelectedItem": "#0078d4",
+    "SelectedItem": "#0078d7",
     "SelectedItemText": "#ffffff",
     "VisitedText": "#551a8b"
   },

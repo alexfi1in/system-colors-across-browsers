@@ -1,8 +1,8 @@
 {
   "meta": {
-    "browser": "Firefox 148.0",
+    "browser": "Firefox 152.0",
     "os": "Windows NT 10.0",
-    "date": "2026-03-08"
+    "date": "2026-07-13"
   },
   "colors": {
     "AccentColor": "#0060df",
@@ -16,12 +16,12 @@
     "Field": "#ffffff",
     "FieldText": "#000000",
     "GrayText": "#6d6d6d",
-    "Highlight": "#0078d4",
+    "Highlight": "#0078d7",
     "HighlightText": "#ffffff",
     "LinkText": "#0000ee",
     "Mark": "#ffff00",
     "MarkText": "#000000",
-    "SelectedItem": "#0078d4",
+    "SelectedItem": "#0078d7",
     "SelectedItemText": "#ffffff",
     "VisitedText": "#551a8b"
   }
